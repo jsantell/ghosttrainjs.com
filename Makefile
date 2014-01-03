@@ -6,7 +6,7 @@ STYLUS=./node_modules/stylus/bin/stylus
 LESS=./node_modules/less/bin/lessc
 MARKDOWN=./node_modules/marked/bin/marked
 
-all: api jade less stylus concat
+all: api jade less stylus concat setuptests
 
 api:
 	node ./bin/buildapi
@@ -45,7 +45,15 @@ min:
 	cat ./vendor/scripts/ga.js > ./tmp && cat $(PUBLIC)/scripts/site.min.js >> ./tmp
 	mv ./tmp $(PUBLIC)/scripts/site.min.js
 
+setuptests:
+	cd GhostTrain && npm install && make
+	cd ..
+	cp GhostTrain/build/test-bundle.js $(PUBLIC)/scripts/test-bundle.js
+	cp GhostTrain/node_modules/mocha/mocha.js $(PUBLIC)/scripts/mocha.js
+	cp GhostTrain/node_modules/expect.js/expect.js $(PUBLIC)/scripts/expect.js
+	cp GhostTrain/node_modules/mocha/mocha.css $(PUBLIC)/styles/mocha.css
+
 install:
 	@npm install
 
-.PHONY: api jade less stylus concat
+.PHONY: api jade less stylus concat setuptests
