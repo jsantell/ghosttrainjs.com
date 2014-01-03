@@ -12,22 +12,29 @@ body
   background-color: $light
   a
     color: $dark
-  a:hover
-    color: $dark
     text-decoration: underline
+  a:hover
+    color: $highlight
   a:active
     color: $dark
   a:focus
     outline: 0
     color: $dark
+ 
+.navbar-inverse li.active a
+  background-color: $darker
 
 body > .container
   margin-top: 80px
 
 .navbar
   background-color: $dark
+  a
+    text-decoration: none
 .api-menu
   position: fixed
+  a
+    text-decoration: none
 
   font-size: 90%
 
@@ -57,10 +64,13 @@ body.index
     margin-top: 41px
     color: #666
 
-body.api h2 a, h3 a
-  padding-top: 80px
-body.api h2, h3
-  margin-top: 80px
+body.api, body.examples
+  h2 a, h3 a
+    padding-top: 80px
+    text-decoration: none
+body.api, body.examples
+  h2, h3
+    margin-top: 80px
 
 
 pre
@@ -71,3 +81,15 @@ p > code > span,
 li > code > span
   color: $darker !important
   background-color: $lighter !important
+  
+footer
+  margin-top: 200px
+  height: 400px
+  color: $dark
+  a
+    color: $dark
+  ul
+    list-style-type: none
+    padding-left: 0px
+    li
+      margin-left: 0px

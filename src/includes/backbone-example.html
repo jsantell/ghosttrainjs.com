@@ -1,0 +1,36 @@
+<pre>
+  var gt = new GhostTrain();
+
+  var User = Backbone.Model.extend({
+    // Here we pass in our GhostTrain instance into the 
+    // GhostTrainBackbone function which will return a Backbone.sync
+    // equivalent that will communicate with GhostTrain rather than XHR
+    // requests.
+    sync: ENV === 'development' ? GhostTrainBackbone(gt) : Backbone.sync,
+    urlRoot: '/users'
+  });
+
+  // Create a new Backbone User model
+  var user = new User({
+    name: 'Jesper Strömblad'
+  });
+
+  // Let's make our mock route and data store
+  var users = [];
+  gt.post('/users', function (req, res) {
+    var id = ~~(Math.random()*1000);
+    var user = req.body;
+    user.id = id;
+    users.push(user);
+    res.send(user);
+  });
+
+  // Now we can save the user and this would normally make
+  // an HTTP POST request to '/users' with the body data above
+  user.save(null, {
+    success: function (_, res) {
+      console.log(res); // User model
+      console.log(res.id); // User id
+    }
+  });
+</pre>

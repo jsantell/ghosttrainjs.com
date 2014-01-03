@@ -4,10 +4,12 @@
       a.navbar-brand(href='index.html') GhostTrain
     .navbar-collapse
       ul.nav.navbar-nav
-        li
+        li(class=current === 'examples.html' ? 'active' : '')
           a(href='examples.html') Examples
-        li
+        li(class=current === 'api.html' ? 'active' : '')
           a(href='api.html') API
+        li(class=current === 'adapters.html' ? 'active' : '')
+          a(href='adapters.html') Adapters
         li
           a(href='http://github.com/jsantell/GhostTrain') Source
 

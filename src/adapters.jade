@@ -1,0 +1,24 @@
+doctype html
+html
+  head
+    title GhostTrain - Client-side router
+    include includes/head
+  body.examples
+    -var current='adapters.html'
+    include includes/header
+    .container
+      .row
+        .col-md-3
+        .col-md-6
+          h1 GhostTrain Adapters
+          p These interfaces can be used in whatever appropriate way to convert HTTP requests into GhostTrain requests.
+          ul
+            li 
+              a(href='http://github.com/jsantell/GhostTrain-backbone') Backbone
+            li
+              a(href='#') Angular (Coming soon)
+            li
+              a(href='#') XHR (Coming soon)
+        .col-md-3
+
+    include includes/footer

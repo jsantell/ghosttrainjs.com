@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>GhostTrain - Client-side router</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="styles/site.css" rel="stylesheet"></head><body class="examples"><div class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="index.html" class="navbar-brand">GhostTrain</a></div><div class="navbar-collapse"><ul class="nav navbar-nav"><li><a href="examples.html">Examples</a></li><li><a href="api.html">API</a></li><li><a href="http://github.com/jsantell/GhostTrain">Source</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-3"><div class="examples-menu nav hidden-print affix"><ul class="nav"><li><h4><a href="#mocking-req">Mocking Server Requests</a></h4></li><li><h4><a href="#backbone">Using GhostTrain with Backbone</a></h4></li></ul></div></div><div class="col-md-9"><h2 id="server-req">Mocking Server Requests</h2><p>Using GhostTrain in an app lets you work without having to worry about a server. If you create a mock API that functions the same, you'll be able to run a web app without spinning up a backend, have a demo page with all possible use cases already loaded, ready to be explored by a potential customer, or styled by a designer.</p><p>For example, let's say we have an application that queries a server for the current user information. Normally, we'd have to spin up our backend, create a new user, make sure the user is in the correct state that we'd like to test or explore with. For instance, this could be our current code that fetches user data.</p><pre>
+<!DOCTYPE html><html><head><title>GhostTrain - Client-side router</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="styles/site.css" rel="stylesheet"></head><body class="examples"><div class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="index.html" class="navbar-brand">GhostTrain</a></div><div class="navbar-collapse"><ul class="nav navbar-nav"><li class="active"><a href="examples.html">Examples</a></li><li><a href="api.html">API</a></li><li><a href="adapters.html">Adapters</a></li><li><a href="http://github.com/jsantell/GhostTrain">Source</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-3"><div class="examples-menu nav hidden-print affix"><ul class="nav"><li><h4><a href="#mocking-req">Mocking Server Requests</a></h4></li><li><h4><a href="#backbone">Using GhostTrain with Backbone</a></h4></li></ul></div></div><div class="col-md-9"><h1>GhostTrain Examples</h1><h2 id="mocking-req">Mocking Server Requests</h2><p>Using GhostTrain in an app lets you work without having to worry about a server. If you create a mock API that functions the same, you'll be able to run a web app without spinning up a backend, have a demo page with all possible use cases already loaded, ready to be explored by a potential customer, or styled by a designer.</p><p>For example, let's say we have an application that queries a server for the current user information. Normally, we'd have to spin up our backend, create a new user, make sure the user is in the correct state that we'd like to test or explore with. For instance, this could be our current code that fetches user data.</p><pre>
   function fetchUser (id, callback) {
     $.ajax({ url: '/user/' + id }).done(callback);
   }
@@ -68,4 +68,40 @@
      */
   });
 </pre>
-</div></div></div><footer><div class="container"><div class="row"><div class="col-md-4"></div><div class="col-md-4"></div><div class="col-md-4"></div></div></div></footer><script src="scripts/site.js"></script></body></html>
+<h2 id="backbone">Using GhostTrain With Backbone</h2><p><a href='http://backbonejs.com'>Backbone's</a> Models and Collections use `Backbone.sync` internally to translate changes in the client-side models into HTTP requests. We can wrap this functionality with an <a href='adapters.html'>GhostTrain adapter</a>, and while we're developing or testing, use the GhostTrain router instead of a server. Include both GhostTrain and the <a href='http://github.com/jsantell/GhostTrain-Backbone'>Backbone plugin</a> and here's an example on how to wire them together.</p><pre>
+  var gt = new GhostTrain();
+
+  var User = Backbone.Model.extend({
+    // Here we pass in our GhostTrain instance into the 
+    // GhostTrainBackbone function which will return a Backbone.sync
+    // equivalent that will communicate with GhostTrain rather than XHR
+    // requests.
+    sync: ENV === 'development' ? GhostTrainBackbone(gt) : Backbone.sync,
+    urlRoot: '/users'
+  });
+
+  // Create a new Backbone User model
+  var user = new User({
+    name: 'Jesper Strömblad'
+  });
+
+  // Let's make our mock route and data store
+  var users = [];
+  gt.post('/users', function (req, res) {
+    var id = ~~(Math.random()*1000);
+    var user = req.body;
+    user.id = id;
+    users.push(user);
+    res.send(user);
+  });
+
+  // Now we can save the user and this would normally make
+  // an HTTP POST request to '/users' with the body data above
+  user.save(null, {
+    success: function (_, res) {
+      console.log(res); // User model
+      console.log(res.id); // User id
+    }
+  });
+</pre>
+</div></div></div><footer><div class="container"><hr><div class="row"><div class="col-md-3"><h4>Nav</h4><ul><li><a href="index.html">Home</a></li><li><a href="examples.html">Examples</a></li><li><a href="api.html">API</a></li><li><a href="adapters.html">Adapters</a></li></ul></div><div class="col-md-3"><h4>Adapters</h4><ul><li><a href="index.html">Home</a></li><li><a href="examples.html">Examples</a></li><li><a href="api.html">API</a></li><li><a href="adapters.html">Adapters</a></li></ul></div><div class="col-md-3"></div><div class="col-md-3"><h4>Contact</h4><p>Made with &lt;3 by <a href='http://twitter.com/jsantell'>Jordan Santell</a></p><p>Copyright © 2014, MIT License</p></div></div></div></footer><script src="scripts/site.js"></script></body></html>

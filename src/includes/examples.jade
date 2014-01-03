@@ -1,4 +1,5 @@
-h2(id='server-req') Mocking Server Requests
+h1 GhostTrain Examples
+h2(id='mocking-req') Mocking Server Requests
 p Using GhostTrain in an app lets you work without having to worry about a server. If you create a mock API that functions the same, you'll be able to run a web app without spinning up a backend, have a demo page with all possible use cases already loaded, ready to be explored by a potential customer, or styled by a designer.
 
 p For example, let's say we have an application that queries a server for the current user information. Normally, we'd have to spin up our backend, create a new user, make sure the user is in the correct state that we'd like to test or explore with. For instance, this could be our current code that fetches user data.
@@ -14,3 +15,9 @@ include server-req-demo-2.html
 p Now we change our `fetchUser` code when we're in a development environment and get the mock data.
 
 include server-req-demo-3.html
+
+h2(id='backbone') Using GhostTrain With Backbone
+
+p <a href='http://backbonejs.com'>Backbone's</a> Models and Collections use `Backbone.sync` internally to translate changes in the client-side models into HTTP requests. We can wrap this functionality with an <a href='adapters.html'>GhostTrain adapter</a>, and while we're developing or testing, use the GhostTrain router instead of a server. Include both GhostTrain and the <a href='http://github.com/jsantell/GhostTrain-Backbone'>Backbone plugin</a> and here's an example on how to wire them together.
+
+include backbone-example.html

@@ -6121,10 +6121,10 @@ body {
 }
 body a {
   color: #4b5159;
+  text-decoration: underline;
 }
 body a:hover {
-  color: #4b5159;
-  text-decoration: underline;
+  color: #888828;
 }
 body a:active {
   color: #4b5159;
@@ -6133,15 +6133,24 @@ body a:focus {
   outline: 0;
   color: #4b5159;
 }
+.navbar-inverse li.active a {
+  background-color: #2c3033;
+}
 body > .container {
   margin-top: 80px;
 }
 .navbar {
   background-color: #4b5159;
 }
+.navbar a {
+  text-decoration: none;
+}
 .api-menu {
   position: fixed;
   font-size: 90%;
+}
+.api-menu a {
+  text-decoration: none;
 }
 .api-menu li ul.api-methods {
   display: none;
@@ -6175,11 +6184,16 @@ body.index h2 {
   color: #666;
 }
 body.api h2 a,
-h3 a {
+body.examples h2 a,
+body.api h3 a,
+body.examples h3 a {
   padding-top: 80px;
+  text-decoration: none;
 }
 body.api h2,
-h3 {
+body.examples h2,
+body.api h3,
+body.examples h3 {
   margin-top: 80px;
 }
 pre {
@@ -6190,5 +6204,20 @@ p > code > span,
 li > code > span {
   color: #2c3033 !important;
   background-color: #eee !important;
+}
+footer {
+  margin-top: 200px;
+  height: 400px;
+  color: #4b5159;
+}
+footer a {
+  color: #4b5159;
+}
+footer ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+footer ul li {
+  margin-left: 0px;
 }
 
