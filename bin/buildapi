@@ -1,0 +1,29 @@
+var fs = require('fs');
+var path = require('path');
+var marked = require('marked');
+var renderer = new marked.Renderer();
+var apiDir = path.join(__dirname, '../api/');
+
+renderer.heading = function (text, level) {
+  var escapedText = text
+    .replace(/\(([^\)]*)\)/, '()') // Removes arguments between `()`
+    .replace(/[^\w]/g, '-') // Removes non alpha characters
+    .replace(/--/g, '-') // Removes duplicate `--`
+    .replace(/-$/g, '') // Removes trailing `-`
+
+  return '<h' + level + '>' +
+    '<a href="#' + escapedText +
+    '" id="' + escapedText +
+    '">' + text + ' </a></h' + level + '>';
+};
+
+fs.readdirSync(apiDir).filter(function (file) {
+  return /\.md$/.test(file);
+}).forEach(function (file) {
+  var fullPath = path.join(apiDir, file);
+  var outputFile = path.join(apiDir, file.replace('.md', '.html'));
+  var source = fs.readFileSync(fullPath, { encoding: 'utf-8' });
+  var data = marked(source, { renderer: renderer });
+
+  fs.writeFileSync(outputFile, data);
+});

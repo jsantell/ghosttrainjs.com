@@ -1,0 +1,78 @@
+body {
+  font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #2c3033;
+  background-color: #ccc;
+}
+body a {
+  color: #4b5159;
+}
+body a:hover {
+  color: #4b5159;
+  text-decoration: underline;
+}
+body a:active {
+  color: #4b5159;
+}
+body a:focus {
+  outline: 0;
+  color: #4b5159;
+}
+body > .container {
+  margin-top: 80px;
+}
+.navbar {
+  background-color: #4b5159;
+}
+.api-menu {
+  position: fixed;
+  font-size: 90%;
+}
+.api-menu li ul.api-methods {
+  display: none;
+}
+.api-menu li a:hover {
+  background: none;
+  text-decoration: underline;
+}
+.api-menu li.active .api-methods {
+  display: block;
+}
+.api-menu li.active .api-methods li {
+  height: 20px;
+}
+.api-menu li.active .api-methods li a {
+  padding: 0px 10px;
+}
+.api-menu li.active .api-methods li.active a {
+  border-left: 2px solid #888828;
+  padding: 0px 8px;
+}
+body.index h1 {
+  font-size: 52px;
+  display: inline;
+  float: left;
+}
+body.index h2 {
+  display: inline;
+  float: left;
+  margin-top: 41px;
+  color: #666;
+}
+body.api h2 a,
+h3 a {
+  padding-top: 80px;
+}
+body.api h2,
+h3 {
+  margin-top: 80px;
+}
+pre {
+  margin-top: 20px;
+  border-left: 4px solid #888828;
+}
+p > code > span,
+li > code > span {
+  color: #2c3033 !important;
+  background-color: #eee !important;
+}
+

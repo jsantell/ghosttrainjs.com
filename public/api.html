@@ -1,0 +1,156 @@
+<!DOCTYPE html><html><head><title>GhostTrain - Client-side router</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="styles/site.css" rel="stylesheet"></head><body class="api"><div class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="index.html" class="navbar-brand">GhostTrain</a></div><div class="navbar-collapse"><ul class="nav navbar-nav"><li><a href="examples.html">Examples</a></li><li><a href="api.html">API</a></li><li><a href="http://github.com/jsantell/GhostTrain">Source</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-3"><div class="api-menu nav hidden-print affix"><ul class="nav"><li><h4><a href="#GhostTrain">GhostTrain</a></h4><ul class="nav api-methods"><li><a href="#newGhostTrain">constructor</a></li><li><a href="#ghosttrain-request">ghosttrain.request()</a></li><li><a href="#ghosttrain-VERB">ghosttrain.VERB()</a></li><li><a href="#ghosttrain-set">ghosttrain.set()</a></li><li><a href="#ghosttrain-get">ghosttrain.get()</a></li><li><a href="#ghosttrain-enable">ghosttrain.enable()</a></li><li><a href="#ghosttrain-disable">ghosttrain.disable()</a></li></ul></li><li><h4><a href="#Request">Request</a></h4><ul class="nav api-methods"><li><a href="#req-params">req.params</a></li><li><a href="#req-query">req.query</a></li><li><a href="#req-body">req.body</a></li><li><a href="#req-get">req.get()</a></li><li><a href="#req-header">req.header()</a></li><li><a href="#req-xhr">req.xhr</a></li><li><a href="#req-method">req.method</a></li><li><a href="#req-url">req.url</a></li><li><a href="#req-path">req.path</a></li><li><a href="#req-protocol">req.protocol</a></li><li><a href="#req-secure">req.secure</a></li><li><a href="#req-param">req.param</a></li><li><a href="#req-is">req.is()</a></li><li><a href="#req-range">req.range()</a></li></ul></li><li><h4><a href="#Response">Response</a></h4><ul class="nav api-methods"><li><a href="#res-status">res.status()</a></li><li><a href="#res-send">res.send()</a></li><li><a href="#res-json">res.json()</a></li><li><a href="#res-set">res.set()</a></li><li><a href="#res-header">res.header()</a></li><li><a href="#res-get">res.get()</a></li><li><a href="#res-contentType">res.contentType()</a></li><li><a href="#res-type">res.type()</a></li><li><a href="#res-links">res.links()</a></li></ul></li></ul></div></div><div class="col-md-9"><h2><a href="#GhostTrain" id="GhostTrain">GhostTrain </a></h2><h3><a href="#new-GhostTrain" id="new-GhostTrain">new GhostTrain() </a></h3><p>Instantiates a new GhostTrain instance.</p>
+<h3><a href="#ghosttrain-request" id="ghosttrain-request">ghosttrain.request(method, path, [options], callback) </a></h3><p>Makes a request to the GhostTrain instance&#39;s router. Takes an HTTP <code>method</code> string, string <code>path</code>, optional <code>options</code> object, and a <code>callback</code> that will be called with an <code>err</code>, <code>res</code> and <code>body</code> upon response from the router.</p>
+<p>Options:</p>
+<ul>
+<li><code>delay</code>- Number of ms to wait before executing routing (default: <code>1</code>)</li>
+<li><code>body</code>- Object representing POST body data (default: <code>{}</code>)</li>
+<li><code>headers</code>- Object of pairings of header values (default: <code>{}</code>)</li>
+<li><code>contentType</code>- Sets headers for <code>Content-Type</code></li>
+</ul>
+<pre><code> ghosttrain.request(&#39;GET&#39;, &#39;/users/:id&#39;, function (err, res, body) {
+    console.log(res.statusCode);
+    console.log(body);
+ });
+</code></pre><h3><a href="#ghosttrain-VERB" id="ghosttrain-VERB">ghosttrain.VERB(route, callback) </a></h3><p>Declares a URL <code>route</code> with associated handler <code>callback</code>, where <strong>VERB</strong> is an HTTP verb (like <code>get</code> or <code>post</code>). Based on <a href="http://expressjs.com/api.html#app.VERB">Express&#39;s app.VERB</a>. The route handler receives a <a href="#request">Request</a> and a <a href="#response">Response</a> object.</p>
+<pre><code>  ghosttrain.get(&#39;/users/:id&#39;, function (req, res) {
+    console.log(req.params.id); // 10
+    res.send(&#39;OK&#39;);
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/users/10&#39;, function (err, res, body) {
+    console.log(res.statusCode); // 200
+    console.log(body); // &#39;OK&#39;
+  });
+</code></pre><h3><a href="#ghosttrain-set" id="ghosttrain-set">ghosttrain.set(name, value) </a></h3><p>Sets a setting for the GhostTrain instance. Based on <a href="http://expressjs.com/api.html#app.set">Express&#39;s app.set</a>.</p>
+<p>Options:</p>
+<ul>
+<li><code>case sensitive routing</code></li>
+<li><code>strict routing</code></li>
+<li><code>json replacer</code></li>
+<li><code>json spaces</code></li>
+</ul>
+<pre><code>  ghosttrain.set(&#39;strict routing&#39;, true);
+</code></pre><h3><a href="#ghosttrain-get" id="ghosttrain-get">ghosttrain.get(name) </a></h3><p>Returns a setting for the GhostTrain instance. Based on <a href="http://expressjs.com/api.html#app.get">Express&#39;s app.get</a>.</p>
+<pre><code>  ghosttrain.get(&#39;strict routing&#39;); // false
+</code></pre><h3><a href="#ghosttrain-enable" id="ghosttrain-enable">ghosttrain.enable(name) </a></h3><p>Sets a setting for the GhostTrain instance to <code>true</code>. Based on <a href="http://expressjs.com/api.html#app.enable">Express&#39;s app.enable</a></p>
+<pre><code>  ghosttrain.enable(&#39;case sensitive routing&#39;);
+  ghosttrain.get(&#39;case sensitive routing&#39;); // true
+</code></pre><h3><a href="#ghosttrain-disable" id="ghosttrain-disable">ghosttrain.disable(name) </a></h3><p>Sets a setting for the GhostTrain instance to <code>false</code>. Based on <a href="http://expressjs.com/api.html#app.disable">Express&#39;s app.disable</a></p>
+<pre><code>  ghosttrain.disable(&#39;case sensitive routing&#39;);
+  ghosttrain.get(&#39;case sensitive routing&#39;); // false
+</code></pre><h2><a href="#Request" id="Request">Request </a></h2><p>The <code>Request</code> object is the first argument passed into a routes callback and used to get further information regarding how the mock request was sent.</p>
+<h3><a href="#req-params" id="req-params">req.params </a></h3><p>This property is an object containing the values for the parameters defined in a route. Based on <a href="http://expressjs.com/api.html#req.params">Express&#39;s req.params</a> property.</p>
+<pre><code>  ghosttrain.get(&#39;/users/:id&#39;, function (req, res) {
+    console.log(req.params.id); // 12345
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/users/12345&#39;);
+</code></pre><p>For routes that are regular expressions, <code>req.params</code> is an array containing each of the capture groups in order.</p>
+<pre><code>  ghosttrain.get(/\/users\/(.*)/, function (req, res) {
+    console.log(req.params[0]); // 12345
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/users/12345&#39;);
+</code></pre><h3><a href="#req-query" id="req-query">req.query </a></h3><p>This property is an object containing the parsed query-string. Based on <a href="http://expressjs.com/api.html#req.query">Express&#39;s req.query</a> property.</p>
+<pre><code>  ghosttrain.get(&#39;/search&#39;, function (req, res) {
+    console.log(req.query.q); // &#39;rainbows&#39;
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/search?q=rainbows&#39;);
+</code></pre><h3><a href="#req-body" id="req-body">req.body </a></h3><p>This property is an object containing the <code>body</code> property that was sent in a request. Based on <a href="http://expressjs.com/api.html#req.body">Express&#39;s req.body</a> property.</p>
+<pre><code>  ghosttrain.post(&#39;/users/new&#39;, function (req, res) {
+    console.log(req.body.name); // &#39;anders&#39;
+  });
+
+  ghosttrain.request(&#39;post&#39;, &#39;/users/new&#39;, {
+    body: { name: &#39;anders&#39; }
+  });
+</code></pre><h3><a href="#req-get" id="req-get">req.get(name) </a></h3><p>Returns the header value for <code>name</code>. </p>
+<pre><code>  ghosttrain.get(&#39;/&#39;, function (req, res) {
+    console.log(req.get(&#39;Content-Type&#39;)); // &#39;application/json&#39;
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/&#39;, {
+    &#39;Content-Type&#39;: &#39;application/json&#39;
+  });
+</code></pre><h3><a href="#req-header" id="req-header">req.header() </a></h3><p>Alias for <a href="#req-get">req.get</a>.</p>
+<h3><a href="#req-xhr" id="req-xhr">req.xhr </a></h3><p>Returns a boolean indiciating whether or not the request has <code>&#39;X-Requested-With&#39;</code> header set to <code>&#39;XMLHttpRequest&#39;</code>.</p>
+<h3><a href="#req-method" id="req-method">req.method </a></h3><p>This property is the name of the HTTP method used to make the request.</p>
+<pre><code>  ghosttrain.get(&#39;/users&#39;, function (req, res) {
+    console.log(req.method); // &#39;GET&#39;
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/users&#39;);
+</code></pre><h3><a href="#req-url" id="req-url">req.url </a></h3><p>This is the url used to make the request.</p>
+<h3><a href="#req-path" id="req-path">req.path </a></h3><p>This is the path used in the route.</p>
+<h3><a href="#req-protocol" id="req-protocol">req.protocol </a></h3><p>This is the protocol used in the request.</p>
+<pre><code>  ghosttrain.get(&#39;http://website.com/users&#39;, function (req, res) {
+    console.log(req.protocol); // &#39;http&#39;
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;http://website.com/users&#39;);
+</code></pre><h3><a href="#req-secure" id="req-secure">req.secure </a></h3><p>Returns a boolean indicating whether or not <code>req.protocol === &#39;https&#39;</code>.</p>
+<h3><a href="#req-param" id="req-param">req.param() </a></h3><p>A function that&#39;s a shorthand for checking a property from <code>req.params</code>, then <code>req.body</code>, and falling back to <code>req.query</code>.</p>
+<pre><code>  ghosttrain.get(&#39;/users/:id/show&#39;, function (req, res) {
+    console.log(req.param(&#39;id&#39;)); // &#39;12345&#39;
+    console.log(req.param(&#39;q&#39;)); // &#39;rainbows&#39;
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/users/12345/show?q=rainbows&#39;);
+</code></pre><h3><a href="#req-is" id="req-is">req.is </a></h3><p>Evaluates a string MIME type to determine if <code>Content-Type</code> matches.</p>
+<pre><code>  ghosttrain.get(&#39;/users&#39;, function (req, res) {
+    console.log(req.is(&#39;html&#39;)); // true
+    console.log(req.is(&#39;text/*&#39;)); // true
+    console.log(req.is(&#39;text/html&#39;)); // true
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/users&#39;, {
+    headers: { &#39;Content-Type&#39;: &#39;text/html&#39; }
+  });
+</code></pre><h3><a href="#res-range" id="res-range">res.range() </a></h3><p>TODO</p>
+<h2><a href="#Response" id="Response">Response </a></h2><p>The <code>Response</code> object is the second argument passed into the routing callback, attempting to mimic functionality of <a href="http://expressjs.com/api.html#response">Express&#39;s Response</a>.</p>
+<h3><a href="#res-status" id="res-status">res.status(value) </a></h3><p>Sets the status code of the request to <code>value</code>.</p>
+<pre><code>  ghosttrain.get(&#39;/&#39;, function (req, res) {
+    res.status(404);
+    res.send();
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/&#39;, function (err, res, body) {
+    console.log(res.statusCode); // 404
+  });
+</code></pre><h3><a href="#res-send---body" id="res-send---body">res.send([body|status), [body]) </a></h3><p>Sends the response back to the requester. Based on <a href="http://expressjs.com/api.html#res.send">Express&#39;s res.send()</a>. Can pass in a <code>status</code> with a string or object as the <code>body</code>, or one or the other.</p>
+<p>When <code>body</code> is a <code>String</code>, <code>Content-Type</code> defaults to <code>text/html</code>. When an <code>Array</code> or <code>Object</code>, <code>Content-Type</code> defaults to <code>application/json</code>.</p>
+<p>When sending only a status code, the <code>body</code> is set to a default HTTP response, such as <code>OK</code> for 200, or <code>Not Found</code> for 404.</p>
+<pre><code>  ghosttrain.get(&#39;/users&#39;, function (req, res) {
+    res.send(200, &#39;This has been a success!&#39;);
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/users&#39;);
+</code></pre><h3><a href="#res-json" id="res-json">res.json([body|status], [body]) </a></h3><p>Sends a JSON response. Shortcut for <code>res.send()</code> and explicitly casts to JSON.</p>
+<pre><code>  ghosttrain.get(&#39;/users&#39;, function (req, res) {
+    res.json({ name: &#39;justin timberlake&#39; });
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/users&#39;, function (err, res, body) {
+    console.log(res.headers[&#39;Content-Type&#39;]); // &#39;application/json&#39;
+    console.log(body.name); // &#39;justin timberlake&#39;
+    console.log(res.statusCode); // 200
+  });
+</code></pre><h3><a href="#res-set" id="res-set">res.set(field, [value]) </a></h3><p>Sets <code>field</code> header to <code>value</code>, or accepts an object and applies those key value pairs to the Response object&#39;s headers.</p>
+<pre><code>  ghosttrain.get(&#39;/&#39;, function (req, res) {
+    res.set(&#39;Content-Type&#39;, &#39;application/json&#39;);
+    res.set({ &#39;X-My-Header&#39;: &#39;high five&#39; });
+    console.log(res.headers[&#39;Content-Type&#39;]); // &#39;application/json&#39;
+    console.log(res.headers[&#39;X-My-Header&#39;]); // &#39;high five&#39;
+  });
+
+  ghosttrain.request(&#39;get&#39;, &#39;/&#39;);
+</code></pre><h3><a href="#res-header" id="res-header">res.header(field, [value]) </a></h3><p>Alias for <a href="#res.set">res.set()</a>.</p>
+<h3><a href="#res-get" id="res-get">res.get(field) </a></h3><p>Returns header value for <code>field</code>.</p>
+<h3><a href="#res-contentType" id="res-contentType">res.contentType(type) </a></h3><p>Sets the header for <code>Content-Type</code> to <code>type</code>.</p>
+<pre><code>  ghosttrain.get(&#39;/&#39;, function (req, res) {
+    res.contentType(&#39;text/html&#39;);
+  });
+</code></pre><h3><a href="#res-type" id="res-type">res.type(type) </a></h3><p>Alias for <a href="#res.contentType">res.contentType()</a></p>
+<h3><a href="#res-links" id="res-links">res.links(links) </a></h3><p>TODO</p>
+</div></div></div><footer><div class="container"><div class="row"><div class="col-md-4"></div><div class="col-md-4"></div><div class="col-md-4"></div></div></div></footer><script src="scripts/site.js"></script></body></html>

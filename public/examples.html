@@ -1,0 +1,71 @@
+<!DOCTYPE html><html><head><title>GhostTrain - Client-side router</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="styles/site.css" rel="stylesheet"></head><body class="examples"><div class="navbar navbar-inverse navbar-fixed-top"><div class="container"><div class="navbar-header"><a href="index.html" class="navbar-brand">GhostTrain</a></div><div class="navbar-collapse"><ul class="nav navbar-nav"><li><a href="examples.html">Examples</a></li><li><a href="api.html">API</a></li><li><a href="http://github.com/jsantell/GhostTrain">Source</a></li></ul></div></div></div><div class="container"><div class="row"><div class="col-md-3"><div class="examples-menu nav hidden-print affix"><ul class="nav"><li><h4><a href="#mocking-req">Mocking Server Requests</a></h4></li><li><h4><a href="#backbone">Using GhostTrain with Backbone</a></h4></li></ul></div></div><div class="col-md-9"><h2 id="server-req">Mocking Server Requests</h2><p>Using GhostTrain in an app lets you work without having to worry about a server. If you create a mock API that functions the same, you'll be able to run a web app without spinning up a backend, have a demo page with all possible use cases already loaded, ready to be explored by a potential customer, or styled by a designer.</p><p>For example, let's say we have an application that queries a server for the current user information. Normally, we'd have to spin up our backend, create a new user, make sure the user is in the correct state that we'd like to test or explore with. For instance, this could be our current code that fetches user data.</p><pre>
+  function fetchUser (id, callback) {
+    $.ajax({ url: '/user/' + id }).done(callback);
+  }
+
+  var id = 12;
+  fetchUser(id, function (user) {
+    console.log(user);
+    /*
+      {
+        id: 12,
+        name: 'Jane Doe',
+        accountType: 3,
+        transactions: [
+          { id: 154902341, status: 'COMPLETE' },
+          { id: 934903432, status: 'PENDING' },
+          { id: 591243239, status: 'FAILED' }
+        ]
+      }
+     */
+  });
+</pre>
+<p>This makes an XHR call to our server and returns a user with our expected state. Maybe we have to spin up a server in an unfamiliar environment, maybe we have to create a user first since none exists and go through the process of creating transactions with three different states. Or maybe someone broke the back-end and you really need to make this front-end fix.</p><p>Let's try this with GhostTrain. First, the routing.</p><pre>
+  var gt = new GhostTrain();
+
+  // Set up a mock data store
+  var users = {
+    '12': {
+      id: 12,
+      name: 'Jane Doe',
+      accountType: 3,
+      transactions: [
+        { id: 154902341, status: 'COMPLETE' },
+        { id: 934903432, status: 'PENDING' },
+        { id: 591243239, status: 'FAILED' }
+      ]
+    }
+  };
+
+  // Same API as Express
+  gt.get('/users/:id', function (req, res) {
+    res.send(users[req.params.id]);
+  });
+</pre>
+<p>Now we change our `fetchUser` code when we're in a development environment and get the mock data.</p><pre>
+  function fetchUser (id, callback) {
+    if (ENV === 'development')
+      gt.request('get', '/users/' + id, function (err, res, body) {
+        callback(body);
+      });
+    else
+      $.ajax({ url: '/users/' + id }).done(callback);
+  }
+
+  fetchUser(function (user) {
+    console.log(user);
+    /*
+      {
+        id: 12,
+        name: 'Jane Doe',
+        accountType: 3,
+        transactions: [
+          { id: 154902341, status: 'COMPLETE' },
+          { id: 934903432, status: 'PENDING' },
+          { id: 591243239, status: 'FAILED' }
+        ]
+      }
+     */
+  });
+</pre>
+</div></div></div><footer><div class="container"><div class="row"><div class="col-md-4"></div><div class="col-md-4"></div><div class="col-md-4"></div></div></div></footer><script src="scripts/site.js"></script></body></html>

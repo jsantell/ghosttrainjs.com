@@ -1,0 +1,15 @@
+{
+  "name": "ghosttrainjs.com",
+  "version": "0.0.0",
+  "description": "Source for http://ghosttrainjs.com",
+  "main": "index.js",
+  "repository": "http://github.com/jsantell/ghosttrainjs.com",
+  "author": "Jordan Santell",
+  "license": "MIT",
+  "devDependencies": {
+    "marked": "0.3.0",
+    "jade": "*",
+    "stylus": "*",
+    "less": "*"
+  }
+}

@@ -1,0 +1,26 @@
+<pre>
+  function fetchUser (id, callback) {
+    if (ENV === 'development')
+      gt.request('get', '/users/' + id, function (err, res, body) {
+        callback(body);
+      });
+    else
+      $.ajax({ url: '/users/' + id }).done(callback);
+  }
+
+  fetchUser(function (user) {
+    console.log(user);
+    /*
+      {
+        id: 12,
+        name: 'Jane Doe',
+        accountType: 3,
+        transactions: [
+          { id: 154902341, status: 'COMPLETE' },
+          { id: 934903432, status: 'PENDING' },
+          { id: 591243239, status: 'FAILED' }
+        ]
+      }
+     */
+  });
+</pre>

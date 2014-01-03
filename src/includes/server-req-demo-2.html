@@ -1,0 +1,22 @@
+<pre>
+  var gt = new GhostTrain();
+
+  // Set up a mock data store
+  var users = {
+    '12': {
+      id: 12,
+      name: 'Jane Doe',
+      accountType: 3,
+      transactions: [
+        { id: 154902341, status: 'COMPLETE' },
+        { id: 934903432, status: 'PENDING' },
+        { id: 591243239, status: 'FAILED' }
+      ]
+    }
+  };
+
+  // Same API as Express
+  gt.get('/users/:id', function (req, res) {
+    res.send(users[req.params.id]);
+  });
+</pre>

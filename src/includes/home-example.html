@@ -1,0 +1,11 @@
+<pre>
+  var users { '12': myUser };
+  gt.get('/users/:id', function (req, res) {
+    res.send(users[req.params.id]);
+  });
+
+  gt.request('get', '/users/12', function (e, res, body) {
+    console.log(res.statusCode); // 200
+    console.log(body); // User Object
+  });
+</pre>

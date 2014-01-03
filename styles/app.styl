@@ -1,0 +1,73 @@
+$highlight = #888828
+$highlight2 = #1EBCE3
+$darker = #2C3033
+$dark = #4B5159
+$light = #CCCCCC
+$lighter = #EEEEEE
+
+
+body
+  font: "Helvetica Neue", Helvetica, Arial, sans-serif
+  color: $darker
+  background-color: $light
+  a
+    color: $dark
+  a:hover
+    color: $dark
+    text-decoration: underline
+  a:active
+    color: $dark
+  a:focus
+    outline: 0
+    color: $dark
+
+body > .container
+  margin-top: 80px
+
+.navbar
+  background-color: $dark
+.api-menu
+  position: fixed
+
+  font-size: 90%
+
+  li ul.api-methods
+    display: none
+
+  li a:hover
+    background: none
+    text-decoration: underline
+  li.active .api-methods
+    display: block
+    li
+      height: 20px
+      a
+        padding: 0px 10px
+      &.active a
+        border-left: 2px solid $highlight
+        padding: 0px 8px
+body.index
+  h1
+    font-size: 52px
+    display: inline
+    float: left
+  h2
+    display: inline
+    float: left
+    margin-top: 41px
+    color: #666
+
+body.api h2 a, h3 a
+  padding-top: 80px
+body.api h2, h3
+  margin-top: 80px
+
+
+pre
+  margin-top: 20px
+  border-left: 4px solid $highlight
+
+p > code > span,
+li > code > span
+  color: $darker !important
+  background-color: $lighter !important

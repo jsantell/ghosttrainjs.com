@@ -1,0 +1,16 @@
+h2(id='server-req') Mocking Server Requests
+p Using GhostTrain in an app lets you work without having to worry about a server. If you create a mock API that functions the same, you'll be able to run a web app without spinning up a backend, have a demo page with all possible use cases already loaded, ready to be explored by a potential customer, or styled by a designer.
+
+p For example, let's say we have an application that queries a server for the current user information. Normally, we'd have to spin up our backend, create a new user, make sure the user is in the correct state that we'd like to test or explore with. For instance, this could be our current code that fetches user data.
+
+include server-req-demo-1.html
+
+p This makes an XHR call to our server and returns a user with our expected state. Maybe we have to spin up a server in an unfamiliar environment, maybe we have to create a user first since none exists and go through the process of creating transactions with three different states. Or maybe someone broke the back-end and you really need to make this front-end fix.
+
+p Let's try this with GhostTrain. First, the routing.
+
+include server-req-demo-2.html
+
+p Now we change our `fetchUser` code when we're in a development environment and get the mock data.
+
+include server-req-demo-3.html
