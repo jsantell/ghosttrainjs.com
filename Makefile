@@ -27,7 +27,8 @@ less:
 	# node $(LESS) ./vendor/styles/font-awesome/font-awesome.less > ./vendor/styles/font-awesome.css
 
 concat:
-	cat ./vendor/scripts/prettify.js > $(PUBLIC)/scripts/site.js
+	cat ./scripts/ga.js > $(PUBLIC)/scripts/site.js
+	cat ./vendor/scripts/prettify.js >> $(PUBLIC)/scripts/site.js
 	cat ./vendor/scripts/jquery.js >> $(PUBLIC)/scripts/site.js
 	cat ./vendor/scripts/scrollspy.js >> $(PUBLIC)/scripts/site.js
 	cat ./scripts/app.js >> $(PUBLIC)/scripts/site.js
@@ -35,15 +36,6 @@ concat:
 	cat ./vendor/styles/bootstrap.css > $(PUBLIC)/styles/site.css
 	cat ./styles/prettify.css >> $(PUBLIC)/styles/site.css
 	cat $(PUBLIC)/styles/app.css >> $(PUBLIC)/styles/site.css
-
-min:
-	node $(UGLIFY) $(PUBLIC)/scripts/landing.js -o $(PUBLIC)/scripts/landing.min.js
-	node $(UGLIFY) $(PUBLIC)/scripts/site.js -o $(PUBLIC)/scripts/site.min.js
-	node $(CLEANCSS) $(PUBLIC)/styles/site.css -o $(PUBLIC)/styles/site.min.css
-	node $(CLEANCSS) $(PUBLIC)/styles/site-landing.css -o $(PUBLIC)/styles/site-landing.min.css
-	# Add GA script to production
-	cat ./vendor/scripts/ga.js > ./tmp && cat $(PUBLIC)/scripts/site.min.js >> ./tmp
-	mv ./tmp $(PUBLIC)/scripts/site.min.js
 
 setuptests:
 	cd GhostTrain && npm install && make
